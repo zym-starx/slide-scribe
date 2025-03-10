@@ -1,4 +1,5 @@
 import streamlit as st
+from pdf_utils import create_notes_pdf
 
 def main():
     st.title("Slide Scribe")
@@ -16,6 +17,17 @@ def main():
         st.write("Uploaded file name:", uploaded_pdf.name)
         st.write(f"Layout: {layout_option}")
         st.write(f"Orientation: {orientation_option}")
+
+        # Generate new structured PDF
+        output_pdf = create_notes_pdf(uploaded_pdf, layout_option, orientation_option)
+
+        # Allow downloading
+        st.download_button(
+            label="Download Notes PDF",
+            data=output_pdf,
+            file_name="structured_notes.pdf",
+            mime="application/pdf"
+        )
 
 if __name__ == "__main__":
     main()
